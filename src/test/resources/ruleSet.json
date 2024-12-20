@@ -1,0 +1,26 @@
+{
+  "name": "Test",
+  "threshold": 1,
+  "rules": [
+    {
+      "keyword": "dragon",
+      "max_distance": 2,
+      "weight": 1
+    },
+    {
+      "keyword": "dungeons",
+      "max_distance": 2,
+      "weight": 1
+    },
+    {
+      "keyword": "monster",
+      "max_distance": 1,
+      "weight": 0.5
+    },
+    {
+      "keyword": "chest",
+      "max_distance": 0,
+      "weight": -1
+    }
+  ]
+}
