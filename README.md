@@ -64,7 +64,7 @@ Curly-search is an innovative open-source project designed to streamline text an
 └── curly-search/
     ├── LICENSE
     ├── README.md
-    ├── build.gradle.kts
+    ├── build.gradle
     ├── gradle.properties
     ├── gradlew
     ├── gradlew.bat

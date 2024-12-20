@@ -1,0 +1,112 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
+    id 'org.jetbrains.dokka' version '2.0.0'
+    id 'java-library'
+    id 'org.jreleaser' version '1.15.0'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'me.rulos'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+def jacksonVersion = '2.18.2'
+dependencies {
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+
+
+publishing {
+
+    publications {
+        'curly-search'(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = 'curly-search'
+            version = project.version
+
+            pom {
+                name = 'Curly Search'
+                description = 'Curly-search is an innovative open-source project designed to streamline text analysis and processing. Leveraging the power of the Bitap algorithm, it offers precise string matching capabilities, even allowing for a defined number of errors. With its unique keyword-based scoring system, users can define rulesets for text evaluation, making it an invaluable tool for data scientists, developers, and researchers. Curly-search simplifies complex text analysis, delivering accurate results and enhancing decision-making processes'
+                url = 'https://github.com/Pedro-UwU/curly-search'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'Pedro-UwU'
+                        name = 'Pedro Lopez Guzman'
+                        email = 'pdihax@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git@github.com:Pedro-UwU/curly-search.git'
+                    url = 'https://github.com/Pedro-UwU/curly-search'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('staging-deploy')
+        }
+        mavenCentral()
+    }
+}
+
+jreleaser {
+    project {
+        description = "Curly-search is an innovative open-source project designed to streamline text analysis and processing. Leveraging the power of the Bitap algorithm, it offers precise string matching capabilities, even allowing for a defined number of errors. With its unique keyword-based scoring system, users can define rulesets for text evaluation, making it an invaluable tool for data scientists, developers, and researchers. Curly-search simplifies complex text analysis, delivering accurate results and enhancing decision-making processes."
+        copyright = 'Copyright © 2024 Pedro Lopez Guzman'
+    }
+    signing {
+        active = 'ALWAYS'
+        armored = true
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                sonatype {
+                    active = 'ALWAYS'
+                    url = 'https://central.sonatype.com/api/v1/publisher'
+                    stagingRepository('build/staging-deploy')
+                    username = '$System.env.MAVEN_CENTRAL_USERNAME'
+                    password = '$System.env.MAVEN_CENTRAL_TOKEN'
+                    authorization = 'BASIC'
+                    applyMavenCentralRules = true
+                    verifyPom = true
+                }
+            }
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(21)
+}
