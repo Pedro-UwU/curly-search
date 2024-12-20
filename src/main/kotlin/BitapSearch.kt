@@ -1,4 +1,4 @@
-package com.pedrito
+package me.rulos
 
 class BitapSearch {
     companion object {

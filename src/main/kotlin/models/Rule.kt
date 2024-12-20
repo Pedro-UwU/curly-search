@@ -1,4 +1,4 @@
-package com.pedrito.models
+package me.rulos.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

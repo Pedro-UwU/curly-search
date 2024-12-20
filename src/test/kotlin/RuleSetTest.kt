@@ -1,5 +1,5 @@
-import com.pedrito.models.Rule
-import com.pedrito.models.RuleSet
+import me.rulos.models.Rule
+import me.rulos.models.RuleSet
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import kotlin.math.abs

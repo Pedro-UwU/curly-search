@@ -1,10 +1,10 @@
-package com.pedrito.models
+package me.rulos.models
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.pedrito.BitapSearch
+import me.rulos.BitapSearch
 import java.io.File
 import kotlin.math.abs
 
