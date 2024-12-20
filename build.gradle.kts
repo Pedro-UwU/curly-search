@@ -4,10 +4,10 @@ plugins {
     `maven-publish`
 }
 
-group = "com.pedrito"
+group = "me.rulos"
 version = "1.0-SNAPSHOT"
 
-val jacksonVersion = "2.18.+"
+val jacksonVersion = "2.18.2"
 repositories {
     mavenCentral()
 }

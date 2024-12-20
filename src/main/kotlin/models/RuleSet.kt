@@ -17,7 +17,6 @@ class RuleSet(
     companion object {
         @JvmStatic
         fun fromJsonFile(path: String): RuleSet {
-            // Read an create a RuleSet
             val mapper = jacksonObjectMapper()
             return mapper.readValue<RuleSet>(File(path))
         }
@@ -46,7 +45,6 @@ class RuleSet(
     }
 
     fun evaluate(text: String): Evaluation {
-        val scores = rules.map { evaluateRule(it, text)}
         val score = rules.sumOf { r -> evaluateRule(r, text) }
         return Evaluation(
             ruleSet = this,
@@ -56,13 +54,13 @@ class RuleSet(
     }
 
     fun evaluate(lines: List<String>): Evaluation {
-        val scores = lines.map { line -> rules.map { r -> evaluateRule(r, line)} }
+        val scores = lines.map { line -> rules.map { r -> evaluateRule(r, line) } }
         val best = ArrayList<Double>()
         for (i in 0..<scores[0].size) {
             best.add(
                 scores.map { it[i] }
-                .sortedWith { score1, score2 -> abs(score2).compareTo(abs(score1)) }
-                .first()
+                    .sortedWith { score1, score2 -> abs(score2).compareTo(abs(score1)) }
+                    .first()
             )
         }
         val finalScore = best.sum()
@@ -83,5 +81,16 @@ class RuleSet(
             0.0
         else
             (1.0 - (1.0 * searchResult.second) / (rule.maxDistance + 1)) * rule.weight
+    }
+
+    override fun toString(): String {
+        val rulesString = if (rules.isEmpty()) {
+            "No rules defined"
+        } else {
+            rules.joinToString(separator = ", ", prefix = "[", postfix = "]") { rule ->
+                "Rule(keyword=${rule.keyword}, maxDistance=${rule.maxDistance}, weight=${rule.weight})"
+            }
+        }
+        return "RuleSet(name='$name', threshold=$threshold, rules=$rulesString)"
     }
 }
